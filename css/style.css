@@ -1,0 +1,1953 @@
+:root{
+  --bg1:#fff7fb;
+  --bg2:#f1f8ff;
+
+  --card: rgba(255,255,255,.72);
+  --card2: rgba(255,255,255,.88);
+  --stroke: rgba(120,120,160,.18);
+
+  --text:#2b2b3a;
+  --muted: rgba(43,43,58,.72);
+
+  --shadow: 0 18px 60px rgba(40,40,70,.14);
+}
+
+body.theme-morning{ --bg1:#fff7fb; --bg2:#f1f8ff; }
+body.theme-afternoon{ --bg1:#fffaf2; --bg2:#f2fff9; }
+body.theme-night{
+  --bg1:#1d1b35; --bg2:#2a1f3d;
+  --card: rgba(255,255,255,.10);
+  --card2: rgba(255,255,255,.14);
+  --stroke: rgba(255,255,255,.18);
+  --text:#f7f7ff;
+  --muted: rgba(247,247,255,.78);
+  --shadow: 0 18px 60px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  margin:0;
+  color:var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(900px 600px at 20% 10%, rgba(183,156,255,.22), transparent 55%),
+    radial-gradient(900px 600px at 80% 20%, rgba(120,217,255,.22), transparent 55%),
+    radial-gradient(900px 600px at 60% 90%, rgba(255,140,207,.22), transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+  overflow-x:hidden;
+}
+
+/* mượt hover tổng */
+.btn, .card, .polaroid, .modal-card{
+  will-change: transform, filter, box-shadow;
+}
+.btn{
+  transition: transform .22s cubic-bezier(.2,.9,.2,1),
+              background .25s ease,
+              box-shadow .25s ease,
+              filter .25s ease;
+}
+.card{
+  transition: transform .26s cubic-bezier(.2,.9,.2,1),
+              box-shadow .28s ease,
+              filter .28s ease;
+}
+.polaroid{
+  transition: transform .22s cubic-bezier(.2,.9,.2,1),
+              box-shadow .22s ease,
+              filter .22s ease;
+}
+.btn:hover{ transform: translateY(-2px); filter: brightness(1.02); }
+.card:hover{ transform: translateY(-2px); filter: brightness(1.01); }
+.polaroid:hover{ transform: translate(-50%,-50%) rotate(var(--rot)) scale(1.02); }
+
+/* sparkle */
+.sparkle{
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 75% 20%, rgba(255,255,255,.45) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 70%, rgba(255,255,255,.35) 0 1px, transparent 2px),
+    radial-gradient(circle at 35% 80%, rgba(255,255,255,.50) 0 1px, transparent 2px);
+  opacity:.25;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes twinkle{
+  from{opacity:.18; transform: translateY(0)}
+  to{opacity:.30; transform: translateY(-6px)}
+}
+
+/* confetti canvas */
+#confetti{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:5;
+  opacity:.65;
+}
+
+/* stickers */
+.stickers{ position:fixed; inset:0; pointer-events:none; z-index:12; }
+.sticker{
+  position:absolute;
+  width:min(96px, 20vw);
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.18));
+  opacity:.95;
+  animation: floaty 6s ease-in-out infinite;
+}
+.s1{ left:14px; top:18px; transform: rotate(-8deg); }
+.s2{ right:18px; top:22px; transform: rotate(10deg); animation-duration: 7.2s; }
+.s3{ left:16px; bottom:16px; transform: rotate(6deg); animation-duration: 5.2s; }
+.s4{ right:12px; bottom:20px; transform: rotate(-6deg); animation-duration: 6.6s; }
+@keyframes floaty{
+  0%{ transform: translateY(0) rotate(var(--r,0deg)); }
+  50%{ transform: translateY(-10px) rotate(var(--r,0deg)); }
+  100%{ transform: translateY(0) rotate(var(--r,0deg)); }
+}
+
+/* ===== Cake Intro (full screen) ===== */
+.cakeIntro{
+  position:fixed; inset:0;
+  display:grid; place-items:center;
+  z-index:90;
+  overflow:hidden;
+}
+.cake-bg{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(900px 600px at 50% 30%, rgba(255,140,207,.30), transparent 60%),
+    radial-gradient(900px 600px at 70% 70%, rgba(120,217,255,.22), transparent 60%),
+    radial-gradient(900px 600px at 20% 75%, rgba(183,156,255,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.40));
+  backdrop-filter: blur(10px);
+}
+.cake-card{
+  width:min(820px, 92vw);
+  border-radius: 28px;
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  box-shadow: var(--shadow);
+  padding: 18px 18px 20px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cake-card::before{
+  content:"";
+  position:absolute; inset:-160px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,140,207,.25), transparent 55%),
+    radial-gradient(circle at 70% 40%, rgba(183,156,255,.22), transparent 55%),
+    radial-gradient(circle at 55% 80%, rgba(120,217,255,.22), transparent 55%);
+  filter: blur(20px);
+  opacity:.95;
+}
+.cake-card > *{ position:relative; z-index:2; }
+
+.cake-top{ display:flex; justify-content:center; }
+.cake-badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.55);
+  font-weight:950;
+}
+
+.cake-hero{ display:grid; place-items:center; margin: 6px 0 10px; }
+.cake-img{
+  width: min(170px, 42vw);
+  filter: drop-shadow(0 16px 30px rgba(0,0,0,.14));
+}
+.cake-title{
+  margin: 8px 0 6px;
+  font-size: clamp(28px, 4.2vw, 46px);
+  line-height:1.1;
+}
+.cake-sub{
+  margin: 0 auto 14px;
+  max-width: 620px;
+  color: var(--muted);
+}
+
+.btn.big{
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 16px;
+}
+
+/* ===== Intro 1 ===== */
+.intro{
+  position:fixed; inset:0;
+  display:grid; place-items:center;
+  z-index:80;
+  background:
+    radial-gradient(900px 600px at 50% 30%, rgba(255,140,207,.28), transparent 55%),
+    radial-gradient(900px 600px at 70% 70%, rgba(120,217,255,.22), transparent 55%),
+    rgba(0,0,0,.08);
+  backdrop-filter: blur(10px);
+}
+.intro-card{
+  width:min(820px, 92vw);
+  border-radius: 26px;
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  box-shadow: var(--shadow);
+  padding: 20px 18px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.intro-card::before{
+  content:"";
+  position:absolute; inset:-120px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,140,207,.25), transparent 55%),
+    radial-gradient(circle at 70% 40%, rgba(183,156,255,.22), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(120,217,255,.22), transparent 55%);
+  filter: blur(18px);
+  opacity:.9;
+}
+.intro-card > *{ position:relative; z-index:2; }
+.intro-badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.55);
+  font-weight:950;
+}
+.intro-title{
+  margin:12px 0 8px;
+  font-size: clamp(26px, 4.2vw, 44px);
+  line-height:1.1;
+}
+.intro-actions{ display:flex; justify-content:center; margin-top: 10px; }
+.intro-hint{ color: var(--muted); font-size: 14px; }
+
+/* ===== layout ===== */
+.wrap{
+  width:min(1100px, 94vw);
+  margin:0 auto;
+  padding: 34px 0 40px;
+  position:relative;
+  z-index:10;
+}
+#mainContent[aria-hidden="true"]{
+  filter: blur(4px);
+  opacity: .35;
+  pointer-events: none;
+}
+.hero{ margin-top: 6px; text-align:center; }
+.tag{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.45);
+  font-weight:800;
+}
+.title{
+  margin: 14px 0 8px;
+  font-size: clamp(34px, 6vw, 58px);
+  line-height:1.05;
+}
+.subtitle{ color: var(--muted); margin: 0 auto 16px; width:min(760px, 92vw); }
+.cursor{ opacity:.9; animation: blink 1s steps(2) infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+.hero-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 12px 0 22px;
+}
+
+/* cards */
+.card{
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border-radius: 22px;
+  padding: 18px 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+.card-head h2{ margin:0 0 6px; }
+.card-head p{ margin:0; color: var(--muted); }
+
+/* buttons */
+.btn{
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.45);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight:900;
+}
+.btn.primary{
+  border-color: rgba(255,140,207,.55);
+  background: linear-gradient(90deg, rgba(255,140,207,.48), rgba(183,156,255,.46));
+}
+
+/* ===== Heart ===== */
+.heart-card{ margin-top: 8px; }
+.heart-stage{
+  position:relative;
+  height: min(520px, 70vh);
+  margin: 14px 0 8px;
+  border-radius: 18px;
+  border: 1px dashed var(--stroke);
+  overflow:hidden;
+  background: radial-gradient(600px 380px at 50% 40%, rgba(255,140,207,.20), transparent 60%);
+}
+.heart-ring{ position:absolute; inset:0; }
+.heart-center{
+  position:absolute;
+  left:50%; top:50%;
+  transform: translate(-50%, -50%);
+  width: min(230px, 60vw);
+  height: min(230px, 60vw);
+  border-radius: 28px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.40);
+  display:grid;
+  place-items:center;
+  text-align:center;
+  box-shadow: var(--shadow);
+}
+.center-glow{
+  position:absolute; inset:-40px;
+  background: radial-gradient(circle at 50% 50%, rgba(255,140,207,.28), transparent 60%);
+  filter: blur(10px);
+  animation: glow 3.4s ease-in-out infinite alternate;
+}
+@keyframes glow{ from{opacity:.45} to{opacity:.85} }
+.center-text{ position:relative; z-index:2; }
+.center-text .mini{ color: rgba(43,43,58,.70); font-weight:900; letter-spacing:.6px; }
+.center-text .big{
+  font-family: "Pacifico", cursive;
+  font-size: clamp(22px, 4.2vw, 36px);
+  margin-top:4px;
+}
+.photo-node{
+  position:absolute;
+  width: clamp(54px, 7.5vw, 86px);
+  aspect-ratio: 1/1;
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 18px 50px rgba(0,0,0,.12);
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.30);
+}
+.photo-node img{ width:100%; height:100%; object-fit:cover; transform: scale(1.06); }
+
+/* ===== Polaroid ===== */
+.polaroid-card{ margin-top: 14px; }
+.polaroid-rain{
+  position:relative;
+  height: min(520px, 70vh);
+  border-radius: 18px;
+  border: 1px dashed var(--stroke);
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.40), rgba(255,255,255,.18));
+}
+.polaroid{
+  position:absolute;
+  width: clamp(130px, 22vw, 190px);
+  background: var(--card2);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 10px 10px 14px;
+  transform: translate(-50%,-50%) rotate(var(--rot));
+  cursor:pointer;
+  user-select:none;
+}
+.polaroid img{
+  width:100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  display:block;
+}
+.polaroid .cap{
+  margin-top: 10px;
+  font-family: "Patrick Hand", cursive;
+  font-size: 20px;
+  color: var(--muted);
+  text-align:center;
+}
+@keyframes fall {
+  0%   { transform: translate(-50%,-70px) rotate(var(--rot)); opacity: 0; }
+  12%  { opacity: 1; }
+
+  /* rơi gần tới đáy khung */
+  78%  { transform: translate(-50%, calc(var(--dropEnd) - 18px)) rotate(calc(var(--rot) * -0.6)); }
+
+  /* bounce 1 */
+  86%  { transform: translate(-50%, var(--dropEnd)) rotate(calc(var(--rot) * -0.45)); }
+  91%  { transform: translate(-50%, calc(var(--dropEnd) - 16px)) rotate(calc(var(--rot) * -0.50)); }
+
+  /* bounce 2 nhỏ hơn */
+  95%  { transform: translate(-50%, var(--dropEnd)) rotate(calc(var(--rot) * -0.40)); }
+  98%  { transform: translate(-50%, calc(var(--dropEnd) - 8px)) rotate(calc(var(--rot) * -0.44)); }
+
+  /* dừng hẳn ở đáy */
+  100% { transform: translate(-50%, var(--dropEnd)) rotate(calc(var(--rot) * -0.40)); opacity: 1; }
+}
+
+
+.polaroid { will-change: transform; }
+
+/* ===== Quiz ===== */
+.game-card{ margin-top: 14px; }
+.quiz{
+  margin-top: 10px;
+  border:1px dashed var(--stroke);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255,255,255,.30);
+}
+.quiz-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.quiz-pill{
+  padding: 8px 12px;
+  border-radius: 999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.45);
+  font-weight: 950;
+}
+.quiz-question{
+  margin: 12px 0 14px;
+  font-weight: 950;
+  font-size: clamp(18px, 2.6vw, 26px);
+  line-height: 1.2;
+}
+.quiz-area{
+  position:relative;
+  height: 96px;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.32);
+  overflow:hidden;
+}
+.quiz-area button{ position:absolute; top: 24px; }
+.game-yes{ left: 18px; }
+.game-no{ left: 160px; }
+.quiz-result{
+  margin-top: 12px;
+  font-family: "Patrick Hand", cursive;
+  font-size: 26px;
+}
+
+/* ===== Modal ===== */
+.modal{
+  position:fixed; inset:0;
+  display:none;
+  z-index:60;
+}
+.modal.show{ display:block; }
+.modal-backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.45); }
+.modal-card{
+  position:absolute;
+  left:50%; top:50%;
+  transform: translate(-50%, -50%);
+  width: min(860px, 92vw);
+  border-radius: 22px;
+  border:1px solid var(--stroke);
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  padding: 18px 16px;
+}
+.modal-close{
+  position:absolute;
+  top:10px; right:10px;
+  border:none;
+  background: rgba(255,255,255,.55);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor:pointer;
+}
+
+/* ===== Letter ===== */
+.modal-card.letter{
+  width: min(900px, 94vw);
+  overflow:hidden;
+}
+.letter-decor{ position:absolute; inset:0; pointer-events:none; }
+.ribbon{
+  position:absolute;
+  left:-60px; top:22px;
+  width: 220px; height: 34px;
+  background: linear-gradient(90deg, rgba(255,140,207,.65), rgba(183,156,255,.55));
+  transform: rotate(-8deg);
+  border-radius: 14px;
+  opacity:.95;
+}
+.spark{
+  position:absolute;
+  right:-80px; bottom:40px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle at 50% 50%, rgba(120,217,255,.35), transparent 60%);
+  filter: blur(6px);
+  animation: glow2 2.6s ease-in-out infinite alternate;
+}
+@keyframes glow2{ from{opacity:.4} to{opacity:.85} }
+
+.envelope{
+  width: min(520px, 92vw);
+  height: 220px;
+  margin: 8px auto 14px;
+  position:relative;
+  transform-origin: 50% 60%;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.18));
+}
+.env-body{
+  position:absolute; inset:0;
+  background: rgba(255,255,255,.52);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+}
+.env-top{
+  position:absolute;
+  left:0; right:0; top:0;
+  height: 70%;
+  background: rgba(255,255,255,.62);
+  border: 1px solid var(--stroke);
+  clip-path: polygon(0 0, 100% 0, 50% 85%);
+  border-radius: 18px;
+  transform-origin: 50% 0%;
+  transform: rotateX(0deg);
+  will-change: transform;
+}
+.env-wax{
+  position:absolute;
+  left: 52px; bottom: 18px;
+  width: 54px; height: 54px;
+  display:grid; place-items:center;
+  border-radius: 18px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.50);
+  transform: rotate(-8deg);
+}
+.env-heart{
+  position:absolute;
+  left:50%; top:52%;
+  transform: translate(-50%,-50%);
+  font-size: 34px;
+  background: rgba(255,255,255,.55);
+  border:1px solid var(--stroke);
+  width: 54px; height: 54px;
+  border-radius: 18px;
+  display:grid; place-items:center;
+}
+.env-open{
+  position:absolute;
+  left:50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  box-shadow: var(--shadow);
+}
+
+/* paper hidden by default */
+.paper{
+  width: min(760px, 94vw);
+  margin: 0 auto;
+  border-radius: 22px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.48);
+  padding: 14px 14px 12px;
+
+  opacity: 0;
+  transform: translateY(34px);
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity .65s ease, transform .65s ease, max-height 1.05s ease;
+  will-change: transform, opacity;
+}
+.envelope.open .env-top{
+  transform: rotateX(165deg);
+  transition: transform 1.25s cubic-bezier(.2,.9,.2,1);
+}
+.envelope.open .env-open{
+  opacity:0;
+  pointer-events:none;
+  transform: translateX(-50%) translateY(10px);
+  transition: .25s ease;
+}
+.envelope.open + .paper{
+  opacity: 1;
+  transform: translateY(14px);
+  max-height: 1200px;
+}
+
+.paper-head{
+  display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px dashed var(--stroke);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+.paper-title{ font-weight: 950; letter-spacing:.3px; }
+.paper-date{ color: var(--muted); font-size: 13px; }
+
+.handwrite{
+  font-family: "Patrick Hand", cursive;
+  font-size: 26px;
+  line-height: 1.25;
+  color: rgba(43,43,58,.92);
+}
+.handwrite.to{ margin-bottom: 8px; }
+.handwrite.body{ min-height: 200px; white-space: pre-wrap; }
+.handwrite.from{
+  margin-top: 10px;
+  text-align:right;
+  font-family: "Pacifico", cursive;
+  font-size: 28px;
+}
+.paper-actions{
+  display:flex; gap:10px; justify-content:flex-end;
+  margin-top: 12px; flex-wrap:wrap;
+}
+
+/* threat popup */
+.threat{
+  position:fixed;
+  left:50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 70;
+  display:none;
+  pointer-events:none;
+}
+.threat.show{ display:block; }
+.threat-card{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.88);
+  box-shadow: var(--shadow);
+  padding: 10px 12px;
+}
+.threat-emoji{ font-size: 28px; }
+.threat-text{ font-weight: 900; color: var(--text); }
+
+@media (max-width: 480px){
+  .btn{ padding: 10px 12px; }
+  .photo-node{ border-radius: 16px; }
+  .quiz-area{ height: 104px; }
+}
+/* ===== Fireworks canvas ===== */
+#fireworks{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:6;      /* trên confetti một chút */
+  opacity: .95;
+}
+/* =========================
+   PATCH: Cake Intro "xịn" hơn
+   (paste cuối style.css)
+   ========================= */
+
+/* ưu tiên tôn fireworks khi đang ở cake intro */
+#fireworks{
+  opacity: 1 !important;
+  mix-blend-mode: screen;
+  filter: saturate(1.12) contrast(1.06);
+}
+
+/* cake intro nền pastel + vignette */
+.cakeIntro{
+  background: radial-gradient(1200px 700px at 50% 30%, rgba(255, 170, 220, .18), transparent 60%),
+              radial-gradient(1200px 700px at 70% 65%, rgba(120, 217, 255, .14), transparent 60%),
+              radial-gradient(1200px 700px at 30% 75%, rgba(183, 156, 255, .12), transparent 60%),
+              linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.40));
+}
+
+.cake-bg{
+  background:
+    radial-gradient(1200px 780px at 50% 30%, rgba(255,140,207,.32), transparent 62%),
+    radial-gradient(900px 700px at 70% 70%, rgba(120,217,255,.22), transparent 60%),
+    radial-gradient(900px 700px at 20% 75%, rgba(183,156,255,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.38));
+  backdrop-filter: blur(14px);
+}
+
+/* card kính mờ "kẹo bông" */
+.cake-card{
+  border-radius: 34px;
+  padding: 22px 20px 22px;
+  border: 1px solid rgba(255,255,255,.40);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.60));
+  box-shadow:
+    0 26px 90px rgba(30, 25, 55, .18),
+    0 10px 40px rgba(255, 140, 207, .10);
+  transform: translateY(0);
+  animation: cakePop .68s cubic-bezier(.2,.9,.2,1) both;
+  will-change: transform, filter, box-shadow;
+  overflow: hidden;
+}
+
+/* ánh sáng pastel chuyển động nhẹ */
+.cake-card::before{
+  content:"";
+  position:absolute; inset:-180px;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,140,207,.30), transparent 58%),
+    radial-gradient(circle at 72% 34%, rgba(183,156,255,.26), transparent 60%),
+    radial-gradient(circle at 58% 82%, rgba(120,217,255,.22), transparent 62%);
+  filter: blur(22px);
+  opacity: .95;
+  animation: cakeGlow 5.6s ease-in-out infinite alternate;
+}
+
+@keyframes cakePop{
+  from{ transform: translateY(16px) scale(.98); opacity:.0; }
+  to{ transform: translateY(0) scale(1); opacity:1; }
+}
+@keyframes cakeGlow{
+  from{ transform: translateY(0) rotate(0deg); opacity:.85; }
+  to{ transform: translateY(-10px) rotate(2deg); opacity:1; }
+}
+
+/* badge nhìn "kẹo" hơn */
+.cake-badge{
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(255,140,207,.30);
+  box-shadow: 0 10px 26px rgba(255,140,207,.10);
+}
+
+/* cake hero: to + bounce nhẹ */
+.cake-hero{
+  margin: 8px 0 12px;
+}
+.cake-img{
+  width: min(210px, 54vw);
+  transform: translateY(0);
+  animation: cakeFloat 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.16));
+}
+@keyframes cakeFloat{
+  0%{ transform: translateY(0) rotate(-1deg); }
+  50%{ transform: translateY(-10px) rotate(1deg); }
+  100%{ transform: translateY(0) rotate(-1deg); }
+}
+
+/* title đậm hơn + glow chữ */
+.cake-title{
+  letter-spacing: .2px;
+  text-shadow: 0 10px 30px rgba(255,140,207,.16);
+}
+.cake-sub{
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* nút "Tiếp theo" nổi bật hơn + hover mượt */
+.cake-card .btn.big{
+  padding: 13px 18px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(255, 140, 207, .18);
+  transform: translateY(0);
+  transition: transform .26s cubic-bezier(.2,.9,.2,1),
+              box-shadow .28s ease,
+              filter .28s ease,
+              background .28s ease;
+}
+.cake-card .btn.big:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.03) saturate(1.02);
+  box-shadow: 0 22px 55px rgba(255, 140, 207, .22);
+}
+.cake-card .btn.big:active{
+  transform: translateY(0) scale(.99);
+}
+
+/* intro 1 cũng mượt hơn */
+.intro-card{
+  border-radius: 30px;
+  box-shadow:
+    0 26px 90px rgba(30, 25, 55, .18),
+    0 10px 40px rgba(120,217,255,.10);
+}
+
+/* giảm cảm giác "khựng" hover: ưu tiên transform & filter */
+.btn:hover, .card:hover, .polaroid:hover{
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* mobile: card gọn đẹp */
+@media (max-width: 480px){
+  .cake-card{ border-radius: 26px; padding: 18px 14px 18px; }
+  .cake-img{ width: min(190px, 62vw); }
+}
+/* =========================
+   PATCH: Intro 1 đẹp + nổi bật
+   ========================= */
+
+.intro{
+  background:
+    radial-gradient(1200px 800px at 50% 20%, rgba(255,140,207,.22), transparent 60%),
+    radial-gradient(900px 700px at 70% 75%, rgba(120,217,255,.18), transparent 60%),
+    radial-gradient(900px 700px at 25% 75%, rgba(183,156,255,.16), transparent 60%),
+    rgba(0,0,0,.08);
+  backdrop-filter: blur(14px);
+}
+
+.intro-card--ticket{
+  position:relative;
+  border-radius: 34px;
+  padding: 22px 20px 20px;
+  border: 1px solid rgba(255,255,255,.48);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.62));
+  box-shadow:
+    0 30px 110px rgba(25, 20, 50, .20),
+    0 14px 55px rgba(255, 140, 207, .12);
+  overflow:hidden;
+}
+
+/* viền gradient xịn */
+.intro-card--ticket::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius: 34px;
+  padding: 1px;
+  background: linear-gradient(90deg,
+    rgba(255,140,207,.55),
+    rgba(183,156,255,.50),
+    rgba(120,217,255,.45)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events:none;
+  opacity:.95;
+}
+
+/* glow nền */
+.ticket-glow{
+  position:absolute; inset:-160px;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255,140,207,.32), transparent 58%),
+    radial-gradient(circle at 75% 35%, rgba(183,156,255,.26), transparent 62%),
+    radial-gradient(circle at 55% 85%, rgba(120,217,255,.22), transparent 62%);
+  filter: blur(24px);
+  opacity:.95;
+  animation: introGlow 5.4s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes introGlow{
+  from{ transform: translateY(0) rotate(0deg); }
+  to{ transform: translateY(-12px) rotate(2deg); }
+}
+
+/* sheen quét sáng */
+.ticket-sheen{
+  position:absolute;
+  inset:-40px;
+  background: linear-gradient(120deg,
+    transparent 35%,
+    rgba(255,255,255,.35) 45%,
+    transparent 55%
+  );
+  transform: translateX(-35%);
+  animation: sheen 4.2s ease-in-out infinite;
+  pointer-events:none;
+  opacity:.75;
+}
+@keyframes sheen{
+  0%{ transform: translateX(-40%) rotate(2deg); }
+  55%{ transform: translateX(40%) rotate(2deg); }
+  100%{ transform: translateX(40%) rotate(2deg); }
+}
+
+/* badge pill đẹp hơn */
+.intro-badge--pill{
+  background: rgba(255,255,255,.74);
+  border: 1px solid rgba(255,140,207,.30);
+  box-shadow: 0 10px 26px rgba(255,140,207,.10);
+  font-weight: 950;
+}
+
+/* chữ script */
+.intro-script{
+  font-family: "Pacifico", cursive;
+  font-size: clamp(22px, 3.2vw, 30px);
+  color: rgba(255, 140, 207, .90);
+  margin: 10px 0 6px;
+  text-shadow: 0 14px 34px rgba(255,140,207,.18);
+}
+
+/* title mạnh hơn */
+.intro-title--strong{
+  margin: 6px 0 10px;
+  font-size: clamp(28px, 4.8vw, 52px);
+  letter-spacing: .2px;
+  line-height: 1.05;
+  text-shadow: 0 18px 50px rgba(30, 25, 55, .14);
+}
+
+/* hint đẹp hơn */
+.intro-hint--better{
+  color: rgba(43,43,58,.74);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 auto 14px;
+  max-width: 720px;
+}
+
+.intro-actions--center{
+  display:flex;
+  justify-content:center;
+  margin-top: 6px;
+}
+
+/* nút bắt đầu nổi bật */
+.btn-start{
+  padding: 14px 20px;
+  border-radius: 18px;
+  box-shadow: 0 22px 65px rgba(255,140,207,.22);
+  position:relative;
+  overflow:hidden;
+}
+.btn-start::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.40), transparent 45%);
+  opacity:.0;
+  transition: opacity .25s ease;
+}
+.btn-start:hover::after{ opacity:1; }
+
+.btn-start{
+  animation: startPulse 1.8s ease-in-out infinite;
+}
+@keyframes startPulse{
+  0%,100%{ transform: translateY(0) scale(1); }
+  50%{ transform: translateY(-2px) scale(1.02); }
+}
+
+/* footnote */
+.intro-footnote{
+  margin-top: 12px;
+  color: rgba(43,43,58,.62);
+  font-size: 13px;
+}
+/* =========================
+   PATCH: Heart ring đẹp hơn (polaroid + glow)
+   ========================= */
+
+.heart-card .heart-stage{
+  position: relative;
+  border-radius: 26px;
+  background:
+    radial-gradient(900px 500px at 50% 40%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(900px 500px at 60% 70%, rgba(120,217,255,.14), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.44));
+  border: 1px dashed rgba(180,180,210,.35);
+  overflow: hidden;
+  min-height: clamp(360px, 55vh, 620px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ring container */
+.heart-ring{
+  position: relative;
+  width: min(560px, 86vw);
+  height: min(420px, 56vh);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* mỗi ảnh thành polaroid thật */
+.heart-item{
+  position: absolute;
+  width: clamp(86px, 10.6vw, 122px);
+  height: clamp(112px, 13.6vw, 156px);
+  border-radius: 16px;
+  background: rgba(255,255,255,.96);
+  padding: 8px 8px 18px;
+  box-shadow:
+    0 18px 48px rgba(30, 25, 55, .14),
+    0 6px 18px rgba(255,140,207,.10);
+  border: 1px solid rgba(255,255,255,.65);
+  transform: translate(-50%,-50%) rotate(var(--r, 0deg));
+  transition: transform .35s cubic-bezier(.2,.9,.2,1), box-shadow .35s ease;
+  cursor: pointer;
+}
+
+.heart-item:hover{
+  transform: translate(-50%,-56%) rotate(var(--r, 0deg)) scale(1.06);
+  box-shadow:
+    0 26px 75px rgba(30, 25, 55, .18),
+    0 12px 30px rgba(255,140,207,.16);
+}
+
+/* ảnh bên trong */
+.heart-item img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display:block;
+  background: linear-gradient(135deg, rgba(255,140,207,.20), rgba(120,217,255,.18));
+}
+
+/* caption nhỏ */
+.heart-item .cap{
+  position:absolute;
+  bottom: 6px;
+  left: 10px;
+  right: 10px;
+  font-size: 11px;
+  color: rgba(60,60,80,.58);
+  text-align: center;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+/* center heart nâng cấp */
+.heart-center{
+  position:absolute;
+  inset: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.center-glow{
+  position:absolute;
+  width: min(340px, 60vw);
+  height: min(340px, 60vw);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,140,207,.32), transparent 55%),
+    radial-gradient(circle at 65% 60%, rgba(120,217,255,.22), transparent 60%),
+    radial-gradient(circle at 35% 65%, rgba(183,156,255,.20), transparent 62%);
+  filter: blur(18px);
+  opacity: .95;
+  animation: heartGlow 4.8s ease-in-out infinite alternate;
+}
+
+@keyframes heartGlow{
+  from{ transform: scale(1) translateY(0); }
+  to{ transform: scale(1.06) translateY(-8px); }
+}
+
+.center-text{
+  position:relative;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,140,207,.25);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  padding: 14px 18px;
+  box-shadow: 0 18px 55px rgba(30, 25, 55, .14);
+}
+
+.center-text .mini{
+  font-size: 12px;
+  letter-spacing:.3px;
+  color: rgba(60,60,80,.62);
+  text-align:center;
+}
+.center-text .big{
+  font-family: "Pacifico", cursive;
+  font-size: clamp(22px, 3.6vw, 34px);
+  color: rgba(40,40,55,.92);
+  text-align:center;
+}
+
+/* mobile */
+@media (max-width: 480px){
+  .heart-ring{ height: min(420px, 54vh); }
+  .heart-item{ border-radius: 14px; padding: 7px 7px 16px; }
+}
+/* =========================
+   FIX + BEAUTIFY: Heart ring stage
+   ========================= */
+
+.heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow:hidden;
+  min-height: clamp(360px, 55vh, 640px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px dashed rgba(180,180,210,.35);
+
+  /* nền pastel “lụa” */
+  background:
+    radial-gradient(900px 520px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(900px 520px at 70% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(900px 520px at 25% 76%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.40));
+}
+
+/* vòng glow mờ */
+.heart-stage::before{
+  content:"";
+  position:absolute;
+  width:min(560px, 84vw);
+  height:min(430px, 56vh);
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 50%, rgba(255,140,207,.22), rgba(120,217,255,.12), transparent 65%);
+  filter: blur(10px);
+  opacity:.9;
+  pointer-events:none;
+}
+
+/* container ring */
+.heart-ring{
+  position: relative;
+  width: min(620px, 90vw);
+  height: min(460px, 58vh);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* item polaroid */
+.heart-item{
+  position:absolute;
+  width: clamp(92px, 12vw, 128px);
+  height: clamp(112px, 14vw, 160px);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+  transform:
+    translate(-50%,-50%)
+    rotate(calc(var(--spin, 0deg) + var(--ring-rot, 0deg)))
+    rotate(var(--tilt, 0deg))
+    scale(calc(var(--s, 1) * var(--hover, 1)));
+  transition: transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .32s ease;
+  cursor: pointer;
+  --hover:1;
+}
+
+.heart-item:hover{
+  --hover: 1.14;
+  filter: blur(0px) saturate(1.12) contrast(1.04);
+  opacity: 1;
+  z-index: 9999 !important;
+  box-shadow:
+    0 50px 140px rgba(18, 16, 38, .32),
+    0 18px 50px rgba(255,140,207,.26);
+}
+.heart-item.is-peek{
+  --hover: 1.12;
+  filter: blur(0px) saturate(1.12) contrast(1.04);
+  opacity: 1;
+  z-index: 9999 !important;
+}
+
+
+/* ảnh */
+.heart-item img{
+  width:100%;
+  height:100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display:block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+/* cap */
+.heart-item .cap{
+  position:absolute;
+  left:10px; right:10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align:center;
+  color: rgba(70,70,90,.58);
+}
+
+/* center card nhỏ lại cho không che ảnh */
+.center-text{
+  border-radius: 22px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(255,140,207,.20);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(30, 25, 55, .12);
+}
+.center-text .big{
+  font-size: clamp(20px, 3.3vw, 30px);
+}
+
+/* mobile */
+@media (max-width: 480px){
+  .heart-ring{ height: min(440px, 54vh); }
+  .heart-item{ width: 92px; height: 130px; }
+}
+/* =========================
+   Heart ring: fix overlap + center name
+   ========================= */
+
+.heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow:hidden;
+  min-height: clamp(380px, 56vh, 650px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px dashed rgba(180,180,210,.35);
+  background:
+    radial-gradient(980px 560px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(980px 560px at 72% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(980px 560px at 25% 78%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.38));
+}
+
+.heart-ring{
+  position: relative;
+  width: min(680px, 92vw);
+  height: min(500px, 60vh);
+  --ring-rot: 0deg;
+  --card-scale: 1;
+}
+
+/* polaroid */
+.heart-item{
+  position:absolute;
+  width: clamp(84px, 10.8vw, 120px);
+  height: clamp(104px, 13.5vw, 154px);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+
+  /* XOAY ĐẸP: chỉ xoay theo ring + tilt nhẹ (không xoay tangent) */
+  transform:
+    translate(-50%,-50%)
+    rotate(var(--ring-rot))
+    rotate(var(--tilt, 0deg))
+    scale(calc(var(--z, 1) * var(--card-scale)));
+
+  transform-origin: center;
+  transition: transform .30s cubic-bezier(.2,.9,.2,1), box-shadow .30s ease;
+  cursor:pointer;
+}
+
+.heart-item:hover{
+  transform:
+    translate(-50%,-56%)
+    rotate(var(--ring-rot))
+    rotate(var(--tilt, 0deg))
+    scale(calc(var(--z, 1) * var(--card-scale) * 1.06));
+  box-shadow:
+    0 28px 80px rgba(30, 25, 55, .18),
+    0 14px 36px rgba(255,140,207,.16);
+}
+
+.heart-item img{
+  width:100%;
+  height:100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display:block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+.heart-item .cap{
+  position:absolute;
+  left:10px; right:10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align:center;
+  color: rgba(70,70,90,.58);
+}
+
+/* CENTER NAME: luôn ở giữa, không bị đẩy */
+.heart-center{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  z-index: 999; /* luôn trên ảnh */
+}
+
+.center-glow{
+  position:absolute;
+  width: min(360px, 64vw);
+  height: min(360px, 64vw);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,140,207,.32), transparent 55%),
+    radial-gradient(circle at 65% 60%, rgba(120,217,255,.22), transparent 60%),
+    radial-gradient(circle at 35% 65%, rgba(183,156,255,.20), transparent 62%);
+  filter: blur(18px);
+  opacity: .95;
+  animation: heartGlow 4.8s ease-in-out infinite alternate;
+}
+
+@keyframes heartGlow{
+  from{ transform: scale(1) translateY(0); }
+  to{ transform: scale(1.06) translateY(-8px); }
+}
+
+.center-text{
+  position:relative;
+  border-radius: 22px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,140,207,.22);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(30, 25, 55, .12);
+}
+
+.center-text .mini{
+  font-size: 12px;
+  color: rgba(60,60,80,.62);
+  text-align:center;
+}
+.center-text .big{
+  font-family: "Pacifico", cursive;
+  font-size: clamp(20px, 3.3vw, 30px);
+  text-align:center;
+  color: rgba(40,40,55,.92);
+}
+
+/* mobile */
+@media (max-width: 480px){
+  .heart-ring{ height: min(460px, 55vh); }
+}
+/* =========================
+   FINAL OVERRIDE: Heart Ring (fix overlap + đẹp hơn)
+   DÁN CUỐI FILE style.css
+   ========================= */
+
+.heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  min-height: clamp(420px, 58vh, 680px);
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(180,180,210,.35);
+  background:
+    radial-gradient(980px 560px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(980px 560px at 72% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(980px 560px at 25% 78%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.40));
+}
+
+.heart-ring{
+  position: relative;
+  width: min(720px, 92vw);
+  height: min(520px, 60vh);
+  --ring-rot: 0deg;
+  --counter-rot: 0deg;
+  --card-scale: 1;
+  transform: rotate(var(--ring-rot));
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* Polaroid card */
+.heart-item{
+  position: absolute;
+  width: clamp(84px, 10.8vw, 122px);
+  height: clamp(108px, 13.8vw, 158px);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+
+  /* IMPORTANT:
+     - translate(-50%,-50%) để canh tâm theo left/top
+     - counter-rot để polaroid không bị lật khi vòng xoay
+   */
+  transform:
+    translate(-50%,-50%)
+    rotate(var(--counter-rot))
+    rotate(var(--tilt, 0deg))
+    scale(calc(var(--z, 1) * var(--card-scale)));
+
+  transform-origin: center;
+  transition: transform .30s cubic-bezier(.2,.9,.2,1), box-shadow .30s ease;
+  cursor: pointer;
+}
+
+.heart-item:hover{
+  transform:
+    translate(-50%,-56%)
+    rotate(var(--counter-rot))
+    rotate(var(--tilt, 0deg))
+    scale(calc(var(--z, 1) * var(--card-scale) * 1.06));
+  box-shadow:
+    0 28px 80px rgba(30, 25, 55, .18),
+    0 14px 36px rgba(255,140,207,.16);
+}
+
+.heart-item img{
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+.heart-item .cap{
+  position: absolute;
+  left: 10px; right: 10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align: center;
+  color: rgba(70,70,90,.58);
+}
+
+/* Center text always in middle */
+.heart-center{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.center-text{
+  position: relative;
+  border-radius: 22px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,140,207,.22);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(30, 25, 55, .12);
+  text-align: center;
+}
+
+.center-text .big{
+  font-family: "Pacifico", cursive;
+  font-size: clamp(20px, 3.3vw, 30px);
+  line-height: 1.1;
+}
+
+/* Mobile */
+@media (max-width: 480px){
+  .heart-ring{ height: min(520px, 58vh); }
+  .heart-item{ width: 90px; height: 132px; }
+}
+/* =========================
+   NEW HEART EFFECT: Orbit on Heart Path
+   DÁN CUỐI FILE style.css
+   ========================= */
+
+#heartSection .heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  min-height: clamp(420px, 58vh, 680px);
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(180,180,210,.35);
+  background:
+    radial-gradient(980px 560px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(980px 560px at 72% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(980px 560px at 25% 78%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.42));
+}
+
+#heartSection .heart-ring.heart-orbit{
+  position: relative;
+  width: min(720px, 92vw);
+  height: min(520px, 60vh);
+}
+
+/* Item chạy theo path */
+#heartSection .orbit-item{
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+  /* chạy theo viền trái tim */
+  offset-path: path("M 50 18 C 50 6, 20 6, 20 26 C 20 44, 40 55, 50 66 C 60 55, 80 44, 80 26 C 80 6, 50 6, 50 18 Z");
+  offset-distance: var(--start, 0%);
+  offset-rotate: 0deg;
+
+  animation: heartOrbit var(--dur, 16s) linear infinite;
+  will-change: offset-distance;
+}
+
+/* Card polaroid */
+#heartSection .orbit-card{
+  display: block;
+  width: clamp(84px, 10.5vw, 122px);
+  height: clamp(110px, 13.8vw, 160px);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+
+  transform: translate(-50%,-50%) rotate(var(--tilt, 0deg));
+  transform-origin: center;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
+}
+
+#heartSection .orbit-item:hover .orbit-card{
+  transform: translate(-50%,-56%) rotate(var(--tilt, 0deg)) scale(1.06);
+  box-shadow:
+    0 28px 80px rgba(30, 25, 55, .18),
+    0 14px 36px rgba(255,140,207,.16);
+}
+
+#heartSection .orbit-card img{
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+#heartSection .orbit-cap{
+  position: absolute;
+  left: 10px; right: 10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align: center;
+  color: rgba(70,70,90,.58);
+}
+
+/* orbit animation */
+@keyframes heartOrbit{
+  from { offset-distance: var(--start, 0%); }
+  to   { offset-distance: calc(var(--start, 0%) + 100%); }
+}
+
+/* Fallback nếu không hỗ trợ offset-path */
+#heartSection .heart-ring.no-offset{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content:center;
+  align-items:center;
+  padding: 18px;
+}
+#heartSection .heart-ring.no-offset .orbit-item{
+  position: static;
+  animation: none;
+  offset-path: none;
+}
+#heartSection .heart-ring.no-offset .orbit-card{
+  transform: rotate(var(--tilt, 0deg));
+}
+
+/* Mobile */
+@media (max-width: 480px){
+  #heartSection .heart-ring.heart-orbit{ height: min(560px, 60vh); }
+}
+.heart-center{ display:none !important; }
+/* =========================
+   HEART ORBIT - FIX (card chạy theo path)
+   ========================= */
+
+#heartSection .heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  min-height: clamp(420px, 58vh, 680px);
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(180,180,210,.35);
+  background:
+    radial-gradient(980px 560px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(980px 560px at 72% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(980px 560px at 25% 78%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.42));
+}
+
+#heartSection .heart-ring.heart-orbit{
+  position: relative;
+  width: min(760px, 92vw);
+  height: min(540px, 62vh);
+  --path: path("M0 0 L10 10");
+}
+
+/* ✅ offset-path đặt trên CHÍNH orbit-card */
+#heartSection .orbit-card{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+
+  width: clamp(82px, 10.3vw, 120px);
+  height: clamp(108px, 13.6vw, 158px);
+
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+
+  cursor: pointer;
+  outline: none;
+
+  offset-path: var(--path);
+  offset-distance: var(--start, 0%);
+  offset-rotate: 0deg;
+
+  animation: heartOrbit var(--dur, 16s) linear infinite;
+
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: center;
+  will-change: offset-distance, transform;
+}
+
+#heartSection .orbit-card:hover{
+  transform: rotate(var(--tilt, 0deg)) scale(1.06);
+  box-shadow:
+    0 28px 80px rgba(30, 25, 55, .18),
+    0 14px 36px rgba(255,140,207,.16);
+}
+
+#heartSection .orbit-card img{
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+#heartSection .orbit-cap{
+  position: absolute;
+  left: 10px; right: 10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align: center;
+  color: rgba(70,70,90,.58);
+}
+
+@keyframes heartOrbit{
+  from { offset-distance: var(--start, 0%); }
+  to   { offset-distance: calc(var(--start, 0%) + 100%); }
+}
+
+/* fallback: không hỗ trợ offset-path thì xếp grid */
+#heartSection .heart-ring.no-offset{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content:center;
+  align-items:center;
+  padding: 18px;
+}
+#heartSection .heart-ring.no-offset .orbit-card{
+  position: static;
+  translate: 0 0;
+  animation: none;
+  offset-path: none;
+}
+
+/* Mobile */
+@media (max-width: 480px){
+  #heartSection .heart-ring.heart-orbit{ height: min(620px, 64vh); }
+  #heartSection .orbit-card{ width: 90px; height: 132px; }
+}
+/* =========================
+   3D HEART RING (10 photos) - DÁN CUỐI FILE
+   ========================= */
+
+#heartSection .heart-stage{
+  position: relative;
+  border-radius: 28px;
+  overflow:hidden;
+  min-height: clamp(420px, 58vh, 680px);
+  display:grid;
+  place-items:center;
+  border: 1px dashed rgba(180,180,210,.35);
+  background:
+    radial-gradient(980px 560px at 50% 38%, rgba(255,140,207,.18), transparent 60%),
+    radial-gradient(980px 560px at 72% 72%, rgba(120,217,255,.14), transparent 62%),
+    radial-gradient(980px 560px at 25% 78%, rgba(183,156,255,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.42));
+}
+
+#heartSection .heart-ring.heart-3d{
+  position: relative;
+  width: min(760px, 92vw);
+  height: min(540px, 62vh);
+
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  --rotY: 0deg;
+  --depth: 120px;
+
+  /* xoay cả vòng theo trục Y */
+  transform: rotateY(var(--rotY));
+  will-change: transform;
+}
+
+/* item nằm tại left/top, đưa về tâm và đẩy Z */
+#heartSection .h3-item{
+  position:absolute;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+  transform-style: preserve-3d;
+
+  /* quan trọng: translate(-50%,-50%) để canh tâm theo left/top */
+  transform:
+    translate(-50%,-50%)
+    translateZ(var(--z, 0px))
+    rotateY(calc(var(--rotY) * -1)); /* counter-rotate để ảnh luôn “thẳng mặt” */
+
+  opacity: var(--o, 1);
+  filter: blur(var(--b, 0px));
+  transition: transform .25s ease, filter .25s ease, opacity .25s ease;
+  will-change: transform, filter, opacity;
+}
+
+/* polaroid */
+#heartSection .h3-card{
+  display:block;
+  width: clamp(86px, 10.8vw, 126px);
+  height: clamp(112px, 14.2vw, 166px);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  padding: 9px 9px 20px;
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 52px rgba(30, 25, 55, .14),
+    0 10px 26px rgba(255,140,207,.10);
+
+  transform: rotate(var(--tilt, 0deg)) scale(var(--s, 1));
+  transform-origin: center;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
+}
+
+#heartSection .h3-item:hover .h3-card{
+  transform: rotate(var(--tilt, 0deg)) scale(calc(var(--s, 1) * 1.06));
+  box-shadow:
+    0 28px 80px rgba(30, 25, 55, .18),
+    0 14px 36px rgba(255,140,207,.16);
+}
+
+#heartSection .h3-card img{
+  width:100%;
+  height:100%;
+  border-radius: 13px;
+  object-fit: cover;
+  display:block;
+  background: linear-gradient(135deg, rgba(255,140,207,.18), rgba(120,217,255,.14));
+}
+
+#heartSection .h3-cap{
+  position:absolute;
+  left:10px; right:10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align:center;
+  color: rgba(70,70,90,.58);
+}
+
+/* Mobile */
+@media (max-width: 480px){
+  #heartSection .heart-ring.heart-3d{ height: min(620px, 64vh); }
+}
+#heartSection .heart-ring.heart-3d{
+  animation: heartPulse 3.6s ease-in-out infinite;
+}
+@keyframes heartPulse{
+  0%,100% { transform: rotateY(var(--rotY)) scale(1); }
+  50%     { transform: rotateY(var(--rotY)) scale(1.03); }
+}
+/* Polaroid sway (gió nhẹ) */
+@keyframes sway {
+  0%   { transform: translate(-50%,-70%) rotate(var(--rot)) translateX(0px); }
+  25%  { transform: translate(-50%,-50%) rotate(calc(var(--rot) * 0.6)) translateX(10px); }
+  50%  { transform: translate(-50%,  0%) rotate(calc(var(--rot) * -0.6)) translateX(-12px); }
+  75%  { transform: translate(-50%, 50%) rotate(calc(var(--rot) * 0.4)) translateX(8px); }
+  100% { transform: translate(-50%, 90%) rotate(calc(var(--rot) * -0.4)) translateX(0px); }
+}
+
+/* dùng fall để kiểm soát opacity + điểm dừng,
+   và sway để tạo gió (chạy song song) */
+.polaroid{
+  will-change: transform, opacity;
+}
+/* ===== FIX chữ intro bị trắng/không thấy ===== */
+.intro-overlay,
+#introOverlay,
+#cakeIntro,
+.cake-intro {
+  color: #23233a !important; /* ép text đậm */
+}
+
+.intro-overlay h1, .intro-overlay h2, .intro-overlay h3,
+#introOverlay h1, #introOverlay h2, #introOverlay h3,
+#cakeIntro h1, #cakeIntro h2, #cakeIntro h3 {
+  color: #1f1f2f !important;
+  text-shadow: 0 2px 10px rgba(255,255,255,.55);
+}
+
+.intro-overlay p, .intro-overlay small,
+#introOverlay p, #introOverlay small,
+#cakeIntro p, #cakeIntro small {
+  color: rgba(35,35,58,.78) !important;
+  text-shadow: 0 1px 8px rgba(255,255,255,.45);
+}
+
+/* nếu có "badge" Happy Birthday */
+.intro-overlay .badge, #introOverlay .badge, #cakeIntro .badge {
+  color: #2b2b44 !important;
+}
+
+/* nút vẫn nổi */
+.intro-overlay .btn, #introOverlay .btn, #cakeIntro .btn {
+  color: #2b2b44 !important;
+}
+/* -------------------------------------------------
+   ✅ OVERRIDES (heart ring depth blur)
+   - tấm ở trước: nét
+   - tấm phía sau: tự blur theo độ sâu (z-index)
+--------------------------------------------------*/
+#heartRing{filter:none !important;}
+#heartRing .heart-item{
+  filter: blur(var(--blur, 0px));
+  opacity: var(--op, 1);
+  will-change: transform, filter, opacity;
+}
+/* =========================
+   HEART RING 3D (override)
+   Dán block này CUỐI file style.css để đè CSS cũ
+========================= */
+.heart-ring{
+  position: relative;
+  width: min(720px, 92vw);
+  height: min(520px, 62vh);
+  margin-inline: auto;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.heart-item{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: clamp(92px, 11.6vw, 132px);
+  height: clamp(118px, 14.8vw, 168px);
+
+  border-radius: 20px;
+  background: rgba(255,255,255,.96);
+  padding: 10px 10px 22px;
+  border: 1px solid rgba(255,255,255,.72);
+
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  opacity: var(--op, .9);
+  filter: blur(var(--blur, 0px));
+  transform:
+    translate3d(calc(-50% + var(--x, 0px)),
+               calc(-50% + var(--y, 0px)),
+               var(--zpx, 0px))
+    rotateY(var(--ry, 0deg))
+    rotateZ(var(--tilt, 0deg))
+    scale(var(--s, 1));
+
+  box-shadow:
+    0 20px 65px rgba(18, 16, 38, .18),
+    0 12px 28px rgba(255,140,207,.14);
+
+  transition: box-shadow .22s ease, filter .22s ease, opacity .22s ease;
+  cursor: pointer;
+  will-change: transform, filter, opacity;
+}
+
+.heart-item::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events:none;
+  background:
+    radial-gradient(120px 90px at 20% 14%, rgba(255,255,255,.85), transparent 60%),
+    linear-gradient(135deg, rgba(255,140,207,.10), rgba(120,217,255,.08));
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+
+.heart-item img{
+  width:100%;
+  height:100%;
+  border-radius: 14px;
+  object-fit: cover;
+  display:block;
+  background: linear-gradient(135deg, rgba(255,140,207,.20), rgba(120,217,255,.16));
+}
+
+.heart-item .cap{
+  position:absolute;
+  left:10px; right:10px;
+  bottom: 6px;
+  font-size: 11px;
+  text-align:center;
+  color: rgba(70,70,90,.58);
+}
+
+.heart-item.is-front{
+  filter: blur(0px) saturate(1.06);
+  opacity: 1;
+  box-shadow:
+    0 34px 95px rgba(18, 16, 38, .24),
+    0 16px 38px rgba(255,140,207,.18);
+}
+
+.heart-item:hover{
+  box-shadow:
+    0 44px 120px rgba(18, 16, 38, .28),
+    0 18px 44px rgba(255,140,207,.22);
+}

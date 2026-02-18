@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday 💝</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="sparkle" aria-hidden="true"></div>
+
+  <!-- Confetti + Fireworks canvases -->
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+
+  <!-- Stickers corner -->
+  <div class="stickers" aria-hidden="true">
+    <img src="assets/stickers/balloon.gif" class="sticker s1" alt="">
+    <img src="assets/stickers/cake.gif" class="sticker s2" alt="">
+    <img src="assets/stickers/star.gif" class="sticker s3" alt="">
+    <img src="assets/stickers/heart.gif" class="sticker s4" alt="">
+  </div>
+
+  <!-- INTRO 0: Cake full screen -->
+  <div id="cakeIntro" class="cakeIntro">
+    <div class="cake-bg"></div>
+
+    <div class="cake-card">
+      <div class="cake-top">
+        <div class="cake-badge">🎂 Surprise!</div>
+      </div>
+
+      <div class="cake-hero">
+        <!-- đổi ảnh/gif bánh tại đây nếu muốn -->
+        <img class="cake-img" src="assets/stickers/cake.gif" alt="Cake">
+      </div>
+
+      <h1 class="cake-title">Chúc mừng sinh nhật 💖</h1>
+      <p class="cake-sub">Một chút pháo hoa để mở màn… rồi anh sẽ đưa em tới món quà thật ✨</p>
+
+      <button id="btnNextIntro" class="btn primary big">Tiếp theo ✨</button>
+    </div>
+  </div>
+
+  <!-- INTRO 1: Gift intro -->
+  <div id="introOverlay" class="intro" style="display:none;">
+  <div class="intro-card intro-card--ticket">
+    <div class="ticket-glow" aria-hidden="true"></div>
+    <div class="ticket-sheen" aria-hidden="true"></div>
+
+    <div class="intro-badge intro-badge--pill">🎁 Happy Birthday</div>
+
+    <div class="intro-script">For you</div>
+
+    <h1 class="intro-title intro-title--strong">
+      Một món quà nhỏ cho <span id="nameInline">Bubu</span>
+    </h1>
+
+    <p class="intro-hint intro-hint--better">
+      Hôm nay là ngày đặc biệt của em — anh muốn em luôn được yêu thương,
+      nhẹ nhàng, và vui vẻ 🎂✨
+    </p>
+
+    <div class="intro-actions intro-actions--center">
+      <button id="btnEnter" class="btn primary big btn-start">
+        Bắt đầu ✨
+      </button>
+    </div>
+
+    <div class="intro-footnote">
+      (Tip: mở phong bì để bật nhạc 🎧)
+    </div>
+  </div>
+  </div>
+
+  <!-- Background music: only plays when open envelope -->
+  <audio id="bgm" preload="auto" loop>
+    <source src="assets/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- MAIN -->
+  <main class="wrap" id="mainContent" aria-hidden="true">
+    <header class="hero">
+      <div class="tag">🎂 Happy Birthday</div>
+
+      <h1 class="title">
+        <span id="typewriter"></span><span class="cursor">|</span>
+      </h1>
+
+      <p class="subtitle">
+        Hôm nay là ngày đặc biệt của <b id="nameBold">Bubu</b> ✨
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn primary" id="btnLetter">Mở thư tay 💌</button>
+      </div>
+    </header>
+
+    <!-- Heart gallery -->
+    <section class="card heart-card" id="heartSection">
+      <div class="card-head">
+        <h2>Vòng ảnh trái tim 💗</h2>
+        <p>Một chút kỷ niệm dễ thương dành riêng cho em.</p>
+      </div>
+
+      <div class="heart-stage">
+        <div id="heartRing" class="heart-ring"></div>
+      </div>
+    </section>
+
+    <!-- Polaroid rain -->
+    <section class="card polaroid-card">
+      <div class="card-head">
+        <h2>Polaroid rơi xuống ☁️📸</h2>
+        <p>Ảnh đang rơi nè… click để phóng to.</p>
+      </div>
+      <div id="polaroidRain" class="polaroid-rain"></div>
+    </section>
+
+    <!-- Mini game -->
+    <section class="card game-card">
+      <div class="card-head">
+        <h2>Mini Game 🎮</h2>
+        <p>Trả lời 3 câu nha… (không được trốn 😼)</p>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-top">
+          <div class="quiz-pill">Câu <span id="qIndex">1</span>/3</div>
+          <div class="quiz-pill">Điểm: <span id="qScore">0</span></div>
+        </div>
+
+        <div class="quiz-question" id="gameQuestion"></div>
+
+        <div class="quiz-area" id="gameArea">
+          <button class="btn primary game-yes" id="btnYes">YES 💖</button>
+          <button class="btn game-no" id="btnNo">NO 🙅</button>
+        </div>
+
+        <div class="quiz-result" id="gameResult" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LETTER MODAL -->
+  <div id="letterModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="letter"></div>
+
+    <div class="modal-card letter">
+      <button class="modal-close" data-close="letter">✕</button>
+
+      <div class="letter-decor">
+        <div class="ribbon"></div>
+        <div class="spark"></div>
+      </div>
+
+      <div class="envelope" id="envelope">
+        <div class="env-top"></div>
+        <div class="env-body"></div>
+        <div class="env-wax">🕯️</div>
+        <div class="env-heart">💗</div>
+
+        <button class="btn primary env-open" id="btnOpenEnvelope">Mở phong bì ✨</button>
+      </div>
+
+      <div class="paper" id="paper">
+        <div class="paper-head">
+          <div class="paper-title">Lá thư tay</div>
+          <div class="paper-date" id="paperDate"></div>
+        </div>
+
+        <div class="paper-content">
+          <div class="handwrite to">Gửi <span id="letterTo">Bubu</span>,</div>
+          <div class="handwrite body" id="letterBody"></div>
+          <div class="handwrite from">— <span id="letterFrom">Tipii</span></div>
+        </div>
+
+        <div class="paper-actions">
+          <button class="btn" id="btnCloseLetter">Đóng thư</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO MODAL -->
+  <div id="photoModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="photo"></div>
+    <div class="modal-card" style="width:min(720px,92vw);">
+      <button class="modal-close" data-close="photo">✕</button>
+      <img id="photoModalImg" alt="photo" style="width:100%;border-radius:18px;display:block;">
+    </div>
+  </div>
+
+  <!-- Threat toast -->
+  <div id="threat" class="threat" aria-hidden="true">
+    <div class="threat-card">
+      <div class="threat-emoji">😾</div>
+      <div class="threat-text">NO hả? Không được đâu nhaaaa! Bấm YES đi 💗</div>
+    </div>
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="./js/confetti.js"></script>
+  <script src="./js/fireworks.js"></script>
+  <script src="./js/heart.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
