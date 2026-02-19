@@ -1951,3 +1951,99 @@ body{
     0 44px 120px rgba(18, 16, 38, .28),
     0 18px 44px rgba(255,140,207,.22);
 }
+
+
+/* =========================
+   FIX: Letter modal fit mobile (iOS/Android)
+   Paste at END of style.css
+   ========================= */
+
+/* Modal: cho phép cuộn và tránh bị "kẹt" trên iOS */
+.modal.show{
+  display:block;
+}
+
+.modal{
+  overflow: hidden; /* tránh body bị kéo theo */
+}
+
+/* Card của modal: giới hạn chiều cao theo viewport + cho scroll */
+.modal-card{
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 14px;
+}
+
+/* Riêng lá thư: gọn hơn trên mobile */
+.modal-card.letter{
+  width: min(920px, 94vw);
+  max-height: calc(100vh - 18px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Nút đóng (✕) luôn nổi trên cùng */
+.modal-close{
+  position: sticky;
+  top: 10px;
+  float: right;
+  z-index: 5;
+}
+
+/* Paper: đừng animate bằng max-height kiểu "kẹt" trên iOS khi nội dung dài.
+   Ta vẫn giữ animation, nhưng đảm bảo paper có thể cuộn nếu dài */
+.paper{
+  max-height: none;           /* bỏ giới hạn 0 -> 1200 gây khó chịu trên mobile */
+  overflow: visible;
+}
+
+/* Khi mở phong bì: paper hiện ra, nhưng nội dung sẽ cuộn trong card modal */
+.envelope.open + .paper{
+  max-height: none;
+}
+
+/* Nội dung thư: nếu dài thì cuộn mượt */
+.paper-content{
+  max-height: calc(100vh - 420px); /* chừa chỗ cho header + phong bì + padding */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 6px;
+}
+
+/* Nút Đóng thư luôn nằm dưới (dễ bấm) */
+.paper-actions{
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.75));
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+/* Font thư tự co trên màn hình nhỏ */
+.handwrite{
+  font-size: clamp(18px, 5.2vw, 26px);
+  line-height: 1.35;
+}
+
+/* Mobile: tăng khoảng trống, giảm envelope để thư không bị chật */
+@media (max-width: 480px){
+  .modal-card{
+    padding: 12px 12px;
+    border-radius: 18px;
+  }
+
+  .envelope{
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  .paper-head{
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .paper-content{
+    max-height: calc(100vh - 380px);
+  }
+}
